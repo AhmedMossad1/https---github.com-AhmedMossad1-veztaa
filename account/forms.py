@@ -6,17 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 
 
-# class UserCreationFormss(UserCreationForm):
-#     username= forms.CharField(label='الاسم ')
-#     first_name= forms.CharField(label='الاسم الاول')
-#     last_name= forms.CharField(label='الاسم الاخير')
-#     email= forms.EmailField(label='البريد الالكتروني')
-#     password1= forms.CharField(label='كلمة السر',widget=forms.PasswordInput(),min_length=8)
-#     password2= forms.CharField(label='ناكيد كلمة السر ',widget=forms.PasswordInput(),min_length=8)
 
-#     class Meta :
-#         model = User
-#         feilds = ('username','first_name','last_name','email','password1','password2')
 
 
 class Login_Form(forms.Form):
@@ -25,6 +15,44 @@ class Login_Form(forms.Form):
     class Meta :
         model = User
         feilds = ('username','password')
+
+
+class UserCForms(forms.ModelForm):
+    username= forms.CharField(
+        label='الاسم '
+    )
+    first_name= forms.CharField(
+        label='الاسم الاول'
+    )
+    last_name= forms.CharField(
+        label='الاسم الاخير'
+    )
+    email= forms.EmailField(
+        label='البريد الالكتروني'
+    )
+    password1= forms.CharField(
+        label='كلمة السر',
+        widget=forms.PasswordInput(),
+        min_length=8
+    )
+    password2= forms.CharField(
+        label='ناكيد كلمة السر ',
+        widget=forms.PasswordInput(),
+        min_length=8
+    )
+
+    class Meta :
+        model = User
+       # feilds = ('username','first_name')
+        fields = ('username','first_name','last_name','email','password1','password2')
+
+
+    def clean_password2(self):    
+        cd = self.cleaned_data
+        if cd['password1'] != cd['password2']:
+            raise forms.ValidationError('Passwords don\'t match.')
+        return cd['password2']
+
 
 
 class UpdateUserForm(forms.ModelForm):

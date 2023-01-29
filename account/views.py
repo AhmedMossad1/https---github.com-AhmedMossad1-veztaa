@@ -1,9 +1,9 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
-from .forms import Login_Form,  UpdateUserForm ,UpdateProfile#UserCreationFormss
+from .forms import Login_Form, UpdateUserForm ,UpdateProfile,UserCForms
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .models import Profile
+from .models import *
 
 
 # Create your views here.
@@ -33,21 +33,30 @@ def user_login (request):
     return render(request ,'user/login.html', {'form':form})    
 
 
-# def signup (request):
-#     if request.method == 'POST':
-#         form = UserCreationFormss(request.POST)
-#         if form.is_valid():
-#             form.save()
-#         username = form.cleaned_data.get('username')
-#         password =form.cleaned_data.get('password')
-#         user = authenticate(username = username , password = password )
-        
-#         login(request,user)
-#         return redirect('account:doctors_list')
-#     else:        
-#         form =UserCreationFormss()
+def user_signup(request):
+    if request.method == 'POST':
+        form = UserCForms(request.POST)
+        if form.is_valid():
+             # Create a new user object but avoid saving it yet
+            new_user = form.save(commit = False)
+            # Set the chosen password
+            new_user.set_password(form.cleaned_data['password1'])
+            new_user.save()
+           #Profile.objects.create(user=new_user)
+            # username = form.cleaned_data.get('username')
+            # password =form.cleaned_data.get('password')
+            # user = authenticate(username = username , password = password )
+            return render(request,'user/register_done.html',{'new_user': new_user})
+    else:       
+            form = UserCForms()
+    return render(request,'user/signup.html',{'form': form})
 
-#     return render(request ,'user/signup.html', {'form':form})    
+    #         login(request,user)
+    #         return redirect('account:doctors_list')
+    # else:        
+    #     form =UserCForms()
+
+    # return render(request ,'user/signup.html', {'form':form})    
 
 
 @login_required(login_url='account:login')

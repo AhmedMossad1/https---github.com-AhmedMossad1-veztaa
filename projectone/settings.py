@@ -76,6 +76,14 @@ WSGI_APPLICATION = 'projectone.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
+     # 'default': {
+     #     'NAME': "manzoma1",
+     #     'ENGINE': 'django.db.backends.postgresql',
+     #     'HOST': '',
+     #     'PORT': '5432',
+     #     'USER': 'postgres',
+     #     'PASSWORD': 'admin'
+     # },
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
@@ -135,3 +143,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# DATABASES = {
+#     # 'default': {
+#     #     'NAME': "manzoma1",
+#     #     'ENGINE': 'django.db.backends.postgresql',
+#     #     'HOST': '',
+#     #     'PORT': '5432',
+#     #     'USER': 'postgres',
+#     #     'PASSWORD': 'admin'
+#     # },
+#     'sqlite': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
